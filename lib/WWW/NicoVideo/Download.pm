@@ -2,13 +2,13 @@ package WWW::NicoVideo::Download;
 
 use strict;
 use 5.8.1;
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use Carp;
 use LWP::UserAgent;
 use CGI::Simple;
 
-use Moose;
+use Any::Moose;
 has 'email',      is => 'rw', isa => 'Str';
 has 'password',   is => 'rw', isa => 'Str';
 has 'user_agent', is => 'rw', isa => 'LWP::UserAgent', default => sub {
@@ -94,7 +94,7 @@ WWW::NicoVideo::Download - Download FLV/MP4/SWF files from nicovideo.jp
 
   my $client = WWW::NicoVideo::Download->new(
       email => 'your-email@example.com',
-      password => 'PASSSWORD',
+      password => 'PASSWORD',
   );
 
   $client->download("smNNNNNN", \&callback);

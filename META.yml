@@ -16,10 +16,10 @@ no_index:
     - inc
     - t
 requires:
+  Any::Moose: 0
   CGI::Simple: 0
   LWP::UserAgent: 0
-  Moose: 0
   perl: 5.8.1
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.01
+version: 0.02
