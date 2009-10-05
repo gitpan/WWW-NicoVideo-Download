@@ -2,7 +2,7 @@ package WWW::NicoVideo::Download;
 
 use strict;
 use 5.8.1;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Carp;
 use LWP::UserAgent;
@@ -39,7 +39,7 @@ sub prepare_download {
         $self->login($video_id);
     }
 
-    $res = $ua->get("http://www.nicovideo.jp/api/getflv?v=$video_id");
+    $res = $ua->get("http://www.nicovideo.jp/api/getflv/$video_id");
     if ($res->is_error) {
         croak "getflv API error: ", $res->status_line;
     }
@@ -56,7 +56,7 @@ sub prepare_download {
 
 sub is_logged_out {
     my($self, $res) = @_;
-    $res->content =~ /id="login_bar"/;
+    $res->content =~ qr|<strong>ゲスト</strong>|;
 }
 
 sub login {
