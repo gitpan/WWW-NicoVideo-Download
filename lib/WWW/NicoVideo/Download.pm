@@ -2,7 +2,7 @@ package WWW::NicoVideo::Download;
 
 use strict;
 use 5.8.1;
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use Carp;
 use LWP::UserAgent;
@@ -12,7 +12,9 @@ use Any::Moose;
 has 'email',      is => 'rw', isa => 'Str';
 has 'password',   is => 'rw', isa => 'Str';
 has 'user_agent', is => 'rw', isa => 'LWP::UserAgent', default => sub {
-    LWP::UserAgent->new( cookie_jar => {} );
+    my $ua = LWP::UserAgent->new( cookie_jar => {} );
+    push @{ $ua->requests_redirectable }, 'POST';
+    $ua;
 };
 
 sub download {
@@ -56,7 +58,7 @@ sub prepare_download {
 
 sub is_logged_out {
     my($self, $res) = @_;
-    $res->content =~ qr|<strong>ゲスト</strong>|;
+    $res->headers->header('x-niconico-authflag') eq '0';
 }
 
 sub login {
